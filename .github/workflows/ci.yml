@@ -1,7 +1,10 @@
 name: CI Check
 
 on:
-  workflow_dispatch:  # Manual trigger only — click "Run workflow" in GitHub Actions tab
+  push:
+    branches:
+      - main              # Auto-run on merge to main
+  workflow_dispatch:      # Manual trigger — click "Run workflow" in GitHub Actions tab
 
 jobs:
   build-and-test:
