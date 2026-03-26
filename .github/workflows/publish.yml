@@ -1,0 +1,33 @@
+name: Publish Library
+
+# 1. This "on" section defines WHEN the action should run.
+on:
+  push:
+    branches:
+      - main  # Runs when you push to the main branch
+  release:
+    types: [published] # Runs when you publish a new Release on GitHub
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest # 2. This creates a temporary Linux machine
+
+    steps:
+      # 3. Downloads your code onto the temporary machine
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 4. Installs the Java JDK (change '17' if your project uses a different version)
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # 5. Connects to Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      # 6. Finally, runs the command we talked about!
+      - name: Publish Package
+        run: ./gradlew publish
